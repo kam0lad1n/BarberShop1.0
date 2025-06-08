@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ro'yxatdan o'tish{% endblock %}
+{% block css %}{% static '/css/accounts/register.css' %}{% endblock css %}
+
+{% block content %}
+    <div class="body">
+        <h1 class="black heading">Ro'yxatdan o'tish</h1>
+        <form action="" method="post" class="form curve-border inset-shadow">
+            {% csrf_token %}
+            <div class="gr">
+                <input
+                        name="first_name"
+                        id="ism"
+                        class="para black curve-border"
+                        type="text"
+                        placeholder="ism"
+                        required/>
+                <label class="black" for="ism">Ism</label>
+            </div>
+            <div class="gr">
+                <input
+                        name="last_name"
+                        id="familiya"
+                        class="para black curve-border"
+                        type="text"
+                        placeholder="familiya"/>
+                <label class="black" for="familiya">Familiya</label>
+            </div>
+            <div class="gr">
+                <input
+                        name="phone"
+                        id="telefon"
+                        class="para black phone_input curve-border"
+                        type="tel"
+                        placeholder="telefon raqam"
+                        pattern="\+998\s[0-9]{2}\s[0-9]{3}\s[0-9]{2}-[0-9]{2}"
+                        required/>
+                <label class="black" for="telefon">Telefon raqamingiz</label>
+            </div>
+            <div class="gr">
+
+                <input type="file" class="para " name="profile_image" id="imageInput" accept="image/*"
+                       onchange="previewImage(this)" hidden>
+                <button class="btn curve-border " type="button" id="cancelButton" onclick="cancelImage()"
+                        style="display: none; margin-top: 10px;">Bekor qilish
+                </button>
+                <label for="imageInput" id="imageLabel" style="cursor: pointer;">
+                    <img id="preview" src="" alt="Rasm yo‘q"
+                         style="display: none; width: 50px; height: auto; border-radius: 10px;">
+                    <div class="btn curve-border " id="uploadText">Rasm joylash uchun bosing</div>
+                </label>
+
+
+            </div>
+            <div class="gr">
+                <div class="input-container">
+                    <input
+                            name="password1"
+                            id="parol1"
+                            class="para black new_password curve-border"
+                            type="password"
+                            placeholder="parol"
+                            minlength="8"
+                            required/>
+                    <span class="eye toggle-password1" onclick="togglePassword1()"><i class="fa-solid fa-eye"></i></span>
+                </div>
+                <label class="black" for="parol1">Parol O'rnating</label>
+            </div>
+
+            <div class="gr">
+                <div class="input-container">
+                    <input
+                            name="password2"
+                            id="parol2"
+                            class="para black new_password curve-border"
+                            type="password"
+                            placeholder="parolni qayta kiriting"
+                            minlength="8"
+                            required/>
+                    <span class="eye toggle-password2" onclick="togglePassword2()"><i class="fa-solid fa-eye"></i></span>
+                </div>
+                <label class="black" for="parol2">Parolni Takrorlang</label>
+            </div>
+
+            <div class="mkadmin">
+                <div style="display: flex; align-items: center; justify-content:center; gap: 10px;">
+                    <input type="checkbox" name="is_staff_code_used" id="id_is_staff_code_used">
+                    <label for="id_is_staff_code_used">Admin
+                        bo'lib ro'yxatdan o'tish</label>
+                </div>
+
+                <div class="gr" id="staff-code-input"
+                     style="display:none;  flex-direction: column-reverse;">
+                     <label class="black" for="id_staff_code">Maxfiy kod</label>
+                    <input class="para black curve-border" type="text" name="staff_code" id="id_staff_code">
+                </div>
+
+            </div>
+            <button type="submit" class="btn curve-border black  ">
+                Ro'yxatdan o'tish
+            </button>
+            <div class="additional">
+                <div class="check">
+                    <input
+                            id="privacy"
+                            type="checkbox"
+                            class="black"
+                            label="privacy"
+                            required
+                    />
+                    <label for="privacy" class="black"><a href="" class="blue">Foydalanish shartlari</a>
+                        bilan tanishdim</label>
+                </div>
+
+
+                <a href="{% url 'login' %}" class="blue">Allaqachon akkauntingiz bormi?</a>
+            </div>
+            {% if form.errors %}
+                <ul class="errors">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li class="error bad">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li class="error bad">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock %}
+<script>
+</script>
+{% block extrajs %}{% static '/css/../../static/js/auth.js' %}{% endblock extrajs %}

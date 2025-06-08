@@ -1,0 +1,24 @@
+{% extends 'pages/profile.html' %}
+{% load static %}
+{% block title %}Profile | Navbatni tark etish{% endblock title %}
+{% block css %}
+{% static'css/bookings/delete.css' %}{% endblock %}
+{% block main%}
+<div class="body">
+    <h1 class="heading">Band qilingan joyni o'chirish</h1>
+    <form method="post" class="form inset-shadow curve-border">
+        {% csrf_token %}
+        <div class="gr">
+            <h3 class="text-center">
+                <strong>{{ user.first_name }}</strong>- haqiqatan ham band
+                qilgan joyingizni o‘chirmoqchimisiz?
+            </h3>
+            <button type="submit" class="btn white bad-bg">
+                Ha, o‘chirish
+            </button>
+            <a href="{% url 'clients' %}" class="btn ">Bekor qilish</a>
+        </div>
+    </form>
+</div>
+
+{% endblock main %}

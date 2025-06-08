@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}BarberShop | Bandlik{%endblock %}
+{% block content %}
+            <div style=" margin: auto; width: 50%; padding: 100px;" class="container curve-border ">
+        <h1 class=" important-text">Siz muvaffaqiyatli joyingizni band qildingiz</h1>
+        <h2>Vaqti {{booking.sana.date}} {{booking.vaqt.time}}</h2>
+                <p></p>
+        <a href="{% url 'home' %}" class="btn  white curve-border">Asosiy sahifaga qaytish</a>
+    </div>
+{% endblock %}

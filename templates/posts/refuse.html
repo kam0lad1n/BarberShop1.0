@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+ {% block title %} Tugatish {% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-12">
+            <div class="card shadow p-4">
+                <h1 class="text-center text-success">Ishni tugatdingiz✓</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p class="text-center">Ishi eskirdi, yangi ishga kirishish uchun buni o'chirib tashlang!</p>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary w-50">O‘chirish</button>
+                        <a href="{% url 'clients' %}" class="btn btn-secondary w-50 ms-2">Bekor qilish</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

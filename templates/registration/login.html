@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Kirish{% endblock %}
+{% block css %}{% static 'css/accounts/register.css' %}{% endblock css %}
+
+{% block content %}
+    <div class="body">
+        <h1 class="black heading">Tizimga Kirish</h1>
+        <form action="" method="post" class="form inset-shadow curve-border">
+            {% csrf_token %}
+            <div class="gr">
+                <input
+                        name="username"
+                        id="telefon"
+                        class="para black phone_input curve-border"
+                        type="tel"
+                        placeholder="telefon raqam"
+                        pattern="\+998 [0-9]{2} [0-9]{3} [0-9]{2}-[0-9]{2}"
+                        required/>
+                <label class="black" for="telefon">Telefon raqam</label>
+            </div>
+
+            <div class="gr password_gr">
+                <div class="input-container">
+                    <input
+                            name="password"
+                            id="parol_input"
+                            class="para black curve-border"
+                            type="password"
+                            placeholder="parol"
+                            minlength="8"
+                            required/>
+                    <span class="eye toggle-password3" onclick="togglePassword3()"><i class="fa-solid fa-eye"></i></span>
+                </div>
+                <label class="black" for="parol_input">Parolingizni kiriting</label>
+            </div>
+
+            {% if form.errors %}
+                <ul class="errors">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li class="error">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li class="error">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit" class="btn curve-border black  ">
+                Tizimga Kirish
+            </button>
+            <div class="additional">
+                <div class="check">
+                    <input type="checkbox" class="black curve-border" label="remember"/>
+                    <label for="remember" class="black"
+                    >Meni eslab qolish</label>
+                </div>
+                <a href="{% url 'register' %}" class="blue"
+                >Hali akkauntingiz yo'qmi?</a>
+                <a href="{% url 'reset_password' %}" class="blue"
+                >Parol esdan chiqdimi?</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block extrajs %}{% static '/css/../../static/js/auth.js' %}{% endblock extrajs %}

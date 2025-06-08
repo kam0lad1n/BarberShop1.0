@@ -1,0 +1,199 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}BarberShop{%endblock %} 
+{% block css %}
+{% static 'css/pages/home.css' %}
+{% endblock %} 
+{% block content %}
+<div class="tutorial map">
+    <i class="fa-solid fa-xmark close" onclick="hide_video()"></i>
+    <iframe
+        src="https://youtube.com/embed/PbfI1XQxwsM?si=Hh5i8USgv_pAjEMq"
+        {#
+        src="{{ site.yt }}"
+        #}
+        title="Yo'riqnoma"
+        class="curve-border"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<section class="home" id="home">
+    <div class="bg-shade"></div>
+    <div class="text">
+        <h1 class="white">{{ site.description }}</h1>
+        {% if user.is_authenticated %}
+        <a href="{% url 'create' %}" class="btn  black">Joy band qilish</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn  black">Kirish</a>
+        {% endif %}
+    </div>
+    <a class="down" href="#barbers">
+        <i class="fa-regular fa-circle-down"></i>
+    </a>
+    <img src="/static/images/shaving-machine.png" class="shaving_machine animated" trf="4" alt="">
+</section>
+{% if barbers %}
+<section class="barbers" id="barbers">
+    <div class="bg-shade"></div>
+    <h1 class="heading barbr">Barberlar</h1>
+    <div class="barbers_container">
+        {% for barber in barbers %}
+        <div class="barber">
+            <div class="tworow">
+                <div class="image">
+                    {% if barber.rasmi %}
+                    <img
+                        loading="lazy"
+                        class="img"
+                        width="200"
+                        height="200"
+                        src="{{ barber.rasmi.url }}"
+                        alt="barber name" />
+                    {% else %}
+                    <img
+                        loading="lazy"
+                        class="img"
+                        width="200"
+                        height="200"
+                        src="{% static 'images/profile.png' %}"
+                        alt="barber name" />
+                    {% endif %}
+                </div>
+                <div class="info">
+                    <div class="gr name">
+                        <h1 class="name">Ism:</h1>
+                        <h1 class="name blue">{{ barber.user.first_name }}</h1>
+                    </div>
+                    <hr />
+                    <div class="details">
+                        <div class="experience gr">
+                            <h1 class="black">Tajriba:<span></span></h1>
+                            <h1 class="exp blue">
+                                {% if barber.tajriba == None %}Kiritilmagan!{% else
+                                %} {{ barber.tajriba }}{% endif %}
+                            </h1>
+                        </div>
+                        <hr />
+                        <div class="age gr">
+                            <h1 class="black">Yosh:</h1>
+                            <h1 class="hisage blue">{{ barber.yoshi }}</h1>
+                        </div>
+                        <hr />
+                        <div class="gr about">
+                            <h1>Trjimai hol:</h1>
+                            <p class="description blue para">
+                                {% if barber.haqida == None %}Malumot mavjud emas!{%
+                                else %}
+                                <i>{{ barber.haqida }}</i>{% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'create' %}" class=" black btn">Mijoz bo'lish</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% else %}
+<section class="nobarber">
+    <h1>Hozircha barberlar saytga qo'shilmagan. Iltimos, muammo haqida <a href="#contact">bizga ayting!</a></h1>
+</section>
+{% endif %}
+
+<section class="about" id="about">
+    <h1 class="heading black">Biz haqimizda</h1>
+
+    <div class="about_container">
+        <div class="left">
+            <div class="image">
+                <img loading="lazy" src="/static/images/barber_life.jpeg" alt="BarberShop Ixtiyor" />
+            </div>
+        </div>
+        <div class="right">
+            <p class="para black">
+                {{ site.about }}
+            </p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'create' %}" class="btn curve-border  black">Joy band qilish</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn curve-border  black">Kirish</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<section class="contact" id="contact">
+    <h1 class="heading black">Bog'lanish</h1>
+
+    <div class="info gr">
+        <div class="left">
+            <div class="gr">
+                <a class="blue" href="{% if site.url1 == none %}{% else %}{{ site.url1 }}{% endif %}"
+                    ><h3 class="para">
+                        <i class="fa-brands fa-telegram"></i> Telegram
+                    </h3></a
+                >
+            </div>
+            <div class="gr">
+                <a class="blue" href="{% if site.url1 == none %}{% else %}{{ site.url2 }}{% endif %}">
+                    <h3 class="para">
+                        <i class="fa-brands fa-instagram"></i>
+                        Instagram
+                    </h3>
+                </a>
+            </div>
+            <div class="gr">
+                <a class="blue" href="{% if site.url1 == none %}{% else %}{{ site.url3 }}{% endif %}"
+                    ><h3 class="para">
+                        <i class="fa-brands fa-youtube"></i>You Tube
+                    </h3></a
+                >
+            </div>
+            <div class="gr">
+                <a class="blue" href=""
+                    ><h3 class="black para">
+                        {% if site.tel == none %}{% else %}<i
+                            class="fa-solid fa-phone-volume"></i
+                        >{{ site.tel }}{% endif %}
+                    </h3></a
+                >
+            </div>
+            {% if user.is_authenticated %}
+            <a href="{% url 'create' %}" class="btn  black"
+                >Joy band qilish</a
+            >
+            {% else %}
+            <a href="{% url 'login' %}" class="btn  black"
+                >Joy band qilish</a
+            >
+            {% endif %}
+            <div class="gr">
+                <button class="btn  black" onclick="show_video()">
+                    Yo'riqnoma
+                </button>
+            </div>
+            <br />
+        </div>
+
+        <div class="right">
+            <div class="map image">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5064.336505374989!2d6.051851471671785!3d46.23291548656306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478c62fcec737b11%3A0x81bef3ae7a885e31!2sCERN!5e1!3m2!1sru!2s!4v1743413755891!5m2!1sru!2s"
+                    {# src="{{ site.location }}" #}
+                    width="600"
+                    height="450"
+                    style="border: 0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/static/js/script.js"></script>
+<script
+    src="https://kit.fontawesome.com/4e53563d8d.js"
+    crossorigin="anonymous"></script>
+{% endblock content %}

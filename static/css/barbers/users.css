@@ -1,0 +1,23 @@
+.body {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+}
+
+
+@media (max-width: 770px) {
+  .body .heading{
+    width: 100%;
+    font-size: 5vw;
+    text-align: center;
+  }
+  .table-parent {
+    width: 90vw;
+    overflow-x: scroll;
+  }
+}
+
+/* # sourceMappingURL=users_list.css.map */

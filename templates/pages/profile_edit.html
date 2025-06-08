@@ -1,0 +1,106 @@
+{% extends 'pages/profile.html' %}
+{% load static %}
+{% block title %}Profil | Tahrirlash{% endblock title %}
+{% block css %}{% static 'css/pages/profile_edit.css' %}{% endblock css %}
+{% block main %}
+    <div class="body">
+        <h2 class="heading">Profilni tahrirlash</h2>
+        <form method="post" enctype="multipart/form-data" class="form curve-border inset-shadow">
+            {% csrf_token %}
+            <div class="gr">
+                  <label class="black" for="ism">Ism</label>
+                <input
+                        name="first_name"
+                        id="ism"
+                        class="para black curve-border"
+                        type="text"
+                        value="{{ user.first_name }}"
+                        placeholder="ism"
+                        required/>
+            </div>
+            <div class="gr">
+                <label class="black" for="familiya">Familiya</label>
+                <input
+                        name="last_name"
+                        id="familiya"
+                        class="para black curve-border"
+                        type="text"
+                        value="{{ user.last_name }}"
+                        placeholder="familiya"/>
+            </div>
+            <div class="gr">
+                <label class="black" for="telefon">Telefon raqamingiz</label>
+                <input
+                        name="phone"
+                        id="telefon"
+                        class="para black phone_input curve-border"
+                        type="tel"
+                        value="{{ user.phone }}"
+                        placeholder="telefon raqam"
+                        pattern="\+998\s[0-9]{2}\s[0-9]{3}\s[0-9]{2}-[0-9]{2}"
+                        readonly/>
+            </div>
+
+          <div class="gr">
+
+                <label for="imageInput" id="imageLabel" style="cursor: pointer;">
+                    <img id="preview" src="" alt="Rasm yo‘q"
+                         style="display: none; width: 80px; height: auto; border-radius: 10px;">
+                    <div class="btn curve-border " id="uploadText">Rasm joylash uchun bosing</div>
+                </label>
+                     <input type="file" class="para " name="profile_image" id="imageInput" accept="image/*"
+                       onchange="previewImage(this)" hidden>
+                <button class="btn curve-border " type="button" id="cancelButton" onclick="cancelImage()"
+                        style="display: none; margin-top: 10px;">Bekor qilish
+                </button>
+            </div>
+
+            {% if form.errors %}
+                <ul style="color: red;">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit" class="btn curve-border black  ">
+                Saqlash
+            </button>
+        </form>
+    </div>
+<script>
+function previewImage(input) {
+    const file = input.files[0];
+    const preview = document.getElementById('preview');
+    const uploadText = document.getElementById('uploadText');
+    const cancelButton = document.getElementById('cancelButton');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            uploadText.style.display = 'none';
+            cancelButton.style.display = 'inline-block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+function cancelImage() {
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const uploadText = document.getElementById('uploadText');
+    const cancelButton = document.getElementById('cancelButton');
+
+    imageInput.value = '';
+    preview.src = '';
+    preview.style.display = 'none';
+    uploadText.style.display = 'block';
+    cancelButton.style.display = 'none';
+}
+</script>
+{% endblock %}

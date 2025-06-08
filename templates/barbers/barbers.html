@@ -1,0 +1,42 @@
+{% extends "pages/profile.html" %}
+{% load static %}
+{% block css %} {% static 'css/barbers/barbers.css' %}{% endblock css %}
+{% block main %}
+   {% if barbers %}
+    <section class="cards">
+       {% for barber in barbers %}
+            <div class="barberr">
+                <div class="imagge">
+                    {% if barber.barber_rasmi %}
+                    <img
+                        loading="lazy"
+                        class=""
+                        src="{{ barber.barber_rasmi.url }}"
+                        alt="barber name" />
+                    {% else %}
+                        <img
+                        loading="lazy"
+                        class=""
+                        src="/static/images/profile.png"
+                        alt="barber name" />
+                    {% endif %}
+                </div>
+                             <h1 class="blue">{{ barber.ismi }}</h1>
+                            <h1 class=" ">{% if barber.tajriba == None%}Tajriba mavjud emas!{% else %}{{ barber.tajriba }} tajriba{% endif %}</h1>
+                            <h1 class=" ">{{ barber.yoshi }}-yosh</h1>
+
+                    {% if user.is_superuser or user.is_staff %}
+                    <a href="{% url 'delete_barber' barber.id %}" class="bad-bg black btn">Barberni o'chirish</a>
+                    {% else %}
+                    <a href="{% url 'create-chosen' barber.id %}" class=" black btn">Joy band qilish</a>
+                    {% endif %}
+            </div>
+
+        {% endfor %}
+    </section>
+    {% else %}
+    <h1>
+    Bu yerda hali barberlar mavjud emas!
+    </h1>
+{% endif %}
+{% endblock main %}

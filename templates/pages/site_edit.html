@@ -1,0 +1,89 @@
+{% extends 'pages/profile.html' %}
+{% block title %}Saytni Tahririlash{% endblock title %}
+{% block main %}
+<div class="body">
+    <form
+        style="width: 80%; margin: auto;"
+        method="post"
+        class="form inset-shadow curve-border"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="gr">
+            <input
+                name="site_name"
+                type="text"
+                class="curve-border"
+                placeholder="Sayt nomi"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="description"
+                class="curve-border"
+                type="text"
+                placeholder="Sartaroshxona shiori"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="location"
+                class="curve-border"
+                type="text"
+                placeholder="Google map lokatsiya"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="url1"
+                class="curve-border"
+                type="text"
+                placeholder="telegram"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="url2"
+                class="curve-border"
+                type="text"
+                placeholder="instagram"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="url3"
+                class="curve-border"
+                type="text"
+                placeholder="Youtube kanal"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="tel"
+                class="curve-border"
+                type="text"
+                placeholder="Telefon raqam"
+                required />
+        </div>
+        <div class="gr">
+            <input
+                name="yt"
+                class="curve-border"
+                type="text"
+                placeholder="Yo'riqnoma (YouTube embed)"
+                required />
+        </div>
+        <div class="gr" style="flex: 1 0 100%;">
+            <textarea
+                name="about"
+                class="curve-border"
+                type="text"
+                placeholder="Sartaroshxona haqida"
+                style="height: 150px;"
+                required></textarea>
+        </div>
+        <div class="gr">
+            <button type="submit" class="btn">Yangilash</button>
+        </div>
+    </form>
+</div>
+{% endblock main %}

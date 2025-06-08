@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}BarberShop | Joy band qilish {% endblock title %}
+{% block css %}{% static 'css/bookings/new.css' %}{% endblock css %}
+{% block content %}
+    <div class="body_new">
+        <h1 class="heading">Salondan joy band qilish</h1>
+        <h4 class="gr">Agar tushunmayotgan bo‘lsangiz, <a href="{% url 'home' %}#map"> yo‘riqnoma </a> bilan tanishing!</h4>
+        <form method="post" action="" id="booking_form" class="form inset-shadow curve-border">
+            {% csrf_token %}
+
+            <div class="gr">
+                <input name="ism" class="para black curve-border" type="text" id="name" placeholder="ism" value="{% if 'ism' in form.errors %} {% else %}{{ request.POST.ism }}{% endif %}" required>
+                <label class="black" for="name">Ism</label>
+            </div>
+
+            <div class="gr">
+                <input name="familiya" class="para black curve-border" type="text" id="familiya"
+                       value="{% if 'familiya' in form.errors %} {% else %}{{ request.POST.familiya }}{% endif %}"
+                       placeholder="familiya">
+                <label class="black" for="familiya">Familiya</label>
+            </div>
+
+            <div class="gr">
+                <input name="telefon" id="telefon" class="para black phone_input curve-border" type="tel"
+                       placeholder="telefon raqami" pattern="\+998 [0-9]{2} [0-9]{3} [0-9]{2}-[0-9]{2}"
+                       value="{% if 'telefon' in form.errors %} {% else %}{{ request.POST.telefon }}{% endif %}"
+                       required>
+                <label class="black" for="telefon">Telefon</label>
+            </div>
+
+            <div class="gr">
+                <select name="barber" class="para black curve-border" id="barber" required>
+                    <option value="0">Barber tanlang</option>
+                    {% for barber in barbers %}
+                        <option value="{{ barber.id }}" {% if request.POST.barber == barber.id|stringformat:"s" %}selected{% endif %}></option>
+                            {{ barber.user.get_full_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label class="black" for="barber">Barber</label>
+            </div>
+
+
+            <div class="gr">
+                <select name="sana" class="para black curve-border" id="sana" class="form-select" required>
+                    <option value="">Sanani tanlang</option>
+                </select>
+                <label class="black" for="sana">Sana</label>
+            </div>
+
+            <div class="gr">
+                <select name="vaqt" class="para black curve-border form-select" id="vaqt" required>
+                    <option value="">Vaqtni tanlang</option>
+                </select>
+                <label class="black" for="vaqt">Vaqt</label>
+            </div>
+
+            <fieldset id="level_fieldset">
+                <legend>Tarif</legend>
+                {% for level in levels %}
+                    <div>
+                        <input type="radio" id="level_{{ level.id }}" name="level" value="{{ level.id }}" required>
+                        <label for="level_{{ level.id }}">
+                            {{ level.name }} - {{ level.value }} so'm
+                        </label>
+                    </div>
+                {% endfor %}
+            </fieldset>
+
+            <a href="{% url 'home' %}#map"><h3 class="blue">Tariflar haqida batafsil..</h3></a>
+            {% if form.errors %}
+                <div style="color: red;">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+
+
+            <button class="btn curve-border black  " type="submit">Saqlash</button>
+        </form>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="width: 600px;">
+            <div class="words">
+                <h2>Tasdiqlash</h2>
+                <p>Haqiqatdan ham ushbu joyni band qilmoqchimisiz?</p>
+            </div>
+
+            <div class="btns">
+                <button id="confirmSubmit" type="submit">Tasdiqlash</button>
+                <button id="editConfirm">Tahrirlash</button>
+                <a href="/">Bekor qilish</a>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('level_fieldset');
+        container.innerHTML = '<legend>Tarif*</legend>';  // Faqat legend bo'lsin
+    });
+    document.getElementById('barber').addEventListener('change', function () {
+        const barberId = this.value;
+        if (barberId) {
+            fetch(`/ajax/levels/?barber_id=${barberId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('level_fieldset');
+                    container.innerHTML = '<legend>Tarif</legend>'; // Oldingi ma'lumotlarni tozalash
+                    data.levels.forEach(level => {
+                        container.innerHTML += `
+             <div>
+                    <input type="radio" name="level" id="level_${level.id}" value="${level.id}" required>
+                    <label for="level_${level.id}">${level.name} - ${level.value} so'm</label>
+                </div>`;
+                    });
+                })
+                .catch(error => console.error('Xato:', error));
+        }
+        fetch(`/ajax/dates/?barber_id=${barberId}`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('sana');
+                container.innerHTML = '<option value="">Sanani tanlang</option>';  // Yangi sanalarni qo'shish
+                data.dates.forEach(item => {
+                    const date = new Date(item.date).toLocaleDateString('uz-UZ');
+                    container.innerHTML += `<option value="${item.id}" {% if request.POST.sana == item.id %}
+                         selected {% endif %}>${date}</option>`;
+                });
+            });
+
+        fetch(`/ajax/times/?barber_id=${barberId}`)
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('vaqt');
+                container.innerHTML = '<option value="">Vaqtni tanlang</option>';  // Faqat option-larni yangilaymiz
+                data.times.forEach(item => {
+                    const time = item.time.slice(0, 5);  // faqat HH:MM qismini olamiz
+                    container.innerHTML += `<option value="${item.id}" {% if request.POST.vaqt == item.id %}
+                         selected {% endif %}>${time}</option>`;
+                });
+            });
+
+    });
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block extrajs %}{% static 'js/new.js' %}{% endblock extrajs %}
+
+

@@ -1,0 +1,19 @@
+{% extends 'pages/profile.html' %}
+{% load static %}
+{% block title %}Profile | Barberni o'chirish{% endblock title %}
+{% block css %}{% static 'css/barbers/delete_barber.css' %}{% endblock css%}
+
+{% block main %}
+        <div class="body">
+                <h1 class="heading">Barberni o'chirish</h1>
+                <form method="post" class="form inset-shadow curve-border">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p class="text-center"><strong>Admin</strong>- haqiqatan ham bu barberni o‘chirmoqchimisiz?</p>
+                    <div class="gr">
+                        <button type="submit" class="btn light- w-50">Ha, o‘chirish</button>
+                        <a href="{% url 'add_barber' %}" class="btn bad-bg ">Bekor qilish</a>
+                    </div>
+                </form>
+            </div>
+{% endblock main %}

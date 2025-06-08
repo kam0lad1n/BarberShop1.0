@@ -1,0 +1,495 @@
+body .tutorial {
+  position: fixed;
+  z-index: 9999999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5647058824);
+}
+body .tutorial.active {
+  display: flex;
+}
+body .tutorial .close {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--third-color);
+}
+body .tutorial iframe {
+  width: 60%;
+  height: 80%;
+}
+body section {
+  width: 100%;
+  height: 100lvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 0;
+  gap: 20px;
+}
+body section.home {
+  position: relative;
+  background-size: cover;
+  background-image: url("/static/images/home_bg.jpeg");
+}
+body section.home .bg-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8745098039);
+  z-index: 1;
+}
+body section.home .text {
+  position: absolute;
+  width: 40lvw;
+  height: 30lvh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  left: 100px;
+  z-index: 3;
+}
+body section.home .text h1 {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+}
+body section.home .text .btn {
+  width: -moz-max-content;
+  width: max-content;
+  padding: 10px 15px;
+  font-size: 1rem;
+}
+body section.home .shaving_machine {
+  position: absolute;
+  z-index: 2;
+  right: 60px;
+  transform: rotate(-25deg);
+}
+body section.home .down {
+  position: absolute;
+  font-size: 2rem;
+  left: 100px;
+  bottom: 50px;
+  animation: up-down 2s infinite linear;
+  z-index: 3;
+  color: var(--third-color);
+}
+body section.barbers {
+  position: relative;
+  z-index: 2;
+}
+body section.barbers .bg-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+body section.barbers .heading {
+  z-index: 2;
+}
+body section.barbers .barbers_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  z-index: 2;
+}
+body section.barbers .barbers_container .barber {
+  width: 500px;
+  height: -moz-max-content;
+  height: max-content;
+  border: 1px solid var(--second-bg);
+  border-radius: 10px;
+  padding: 10px;
+}
+body section.barbers .barbers_container .barber .tworow {
+  display: flex;
+  flex-wrap: wrap;
+}
+body section.barbers .barbers_container .barber .image {
+  height: auto;
+}
+body section.barbers .barbers_container .barber .image img {
+  height: auto;
+}
+body section.barbers .barbers_container .barber .info {
+  width: 50%;
+  height: 100%;
+  padding: 15px;
+  justify-content: space-evenly;
+  align-items: start;
+  flex-direction: column;
+}
+body section.barbers .barbers_container .barber .info .about {
+  height: -moz-max-content;
+  height: max-content;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 0;
+}
+body section.barbers .barbers_container .barber .info .name {
+  font-size: 2rem;
+}
+body section.barbers .barbers_container .barber .info .description {
+  color: var(--fourth-color);
+  width: 300px;
+}
+body section.barbers .barbers_container .barber .info .details {
+  display: flex;
+  flex-direction: column;
+}
+body section.barbers .barbers_container .barber .info .details .gr {
+  width: -moz-max-content;
+  width: max-content;
+  gap: 5px;
+}
+body section.barbers .barbers_container .barber .btn {
+  width: auto;
+  margin-top: 20px;
+}
+body section.nobarber {
+  background-color: var(--disable);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body section.nobarber h1 {
+  color: var(--danger);
+}
+body section.about .about_container {
+  height: 70%;
+  width: -moz-max-content;
+  width: max-content;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+body section.about .about_container .left {
+  height: 100%;
+  gap: 30px;
+}
+body section.about .about_container .left .image {
+  width: -moz-max-content;
+  width: max-content;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body section.about .about_container .left .image img {
+  height: 80%;
+}
+body section.about .about_container .right {
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  gap: 10px;
+}
+body section.about .about_container .right .para {
+  width: 100%;
+  text-align: left;
+}
+body section.contact {
+  width: 100%;
+  height: 100lvh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+body section.contact .info {
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
+}
+body section.contact .info .left {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+body section.contact .info .left .gr {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+body section.contact .info .right {
+  width: 50%;
+  height: 50lvh;
+}
+body section.contact .info .right .map {
+  width: 100%;
+  height: 100%;
+}
+body section.contact .info .right .map iframe {
+  width: 100%;
+  height: 100%;
+}
+body .heading {
+  text-align: center;
+}
+
+@media (min-width: 1430px) {
+  body .home {
+    background-repeat: no-repeat;
+  }
+  body .home .text h1 {
+    color: white;
+  }
+  body .heading {
+    font-size: 3vw;
+  }
+  body .barbers .barber {
+    width: 40%;
+  }
+  body .btn {
+    font-size: 1vw;
+  }
+  body section.about .para {
+    font-size: 1.5vw;
+  }
+}
+@media (max-width: 1025px) {
+  body .barbers {
+    height: 150lvh;
+  }
+}
+@media (max-width: 1378px) {
+  body .home .text {
+    width: 500px;
+  }
+}
+@media (max-width: 1000px) {
+  body section.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  body section.home .text {
+    width: 100%;
+    left: 0;
+    align-items: center;
+  }
+  body section.home .down {
+    width: 100%;
+    left: 0;
+    display: inline;
+    text-align: center;
+  }
+  body section.home .shaving_machine {
+    display: none;
+  }
+  body section.barbers .barber {
+    width: 90% !important;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  body section.contact {
+    height: 150lvh;
+  }
+  body section.contact .info {
+    flex-direction: column-reverse;
+    gap: 50px;
+    align-items: center;
+  }
+  body section.contact .info .left {
+    align-items: center;
+  }
+  body section.contact .info .left .gr {
+    align-items: center;
+  }
+  body section.contact .info .left .btn {
+    width: 150px;
+  }
+  body section.contact .info .right {
+    width: 100%;
+  }
+  body section.contact .info .right .map {
+    width: 100%;
+  }
+  body section.about .about_container {
+    min-height: -moz-max-content;
+    min-height: max-content;
+    flex-direction: column;
+    justify-content: center;
+  }
+  body section.about .about_container .right {
+    width: 90vw;
+    text-align: center;
+    align-items: center;
+  }
+  body section.about .about_container .right p {
+    font-size: 3vw;
+    text-align: center !important;
+  }
+}
+@media (max-width: 845px) {
+  body section.barbers .barber {
+    width: 90% !important;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  body section.barbers .barber .info {
+    width: 100%;
+  }
+  body section.barbers .barber .info .about {
+    width: 100%;
+  }
+  body section.barbers .barber .info .about h1 {
+    font-size: 6vw;
+  }
+  body section.barbers .barber .info .about p {
+    width: 100%;
+    font-size: 4vw;
+  }
+  body section.barbers .barber .info .details .gr h1 {
+    font-size: 4vw;
+  }
+  body section.barbers .barber .info .btn {
+    font-size: 3vw;
+  }
+  body section.about {
+    justify-content: center;
+    min-height: -moz-max-content;
+    min-height: max-content;
+  }
+  body section.about .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  body section.about .left .image {
+    height: 85%;
+  }
+  body section.about .right {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  body section.about .right .text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  body section.about .right h1 {
+    font-size: 6vw;
+  }
+  body section.about .right p {
+    font-size: 3vw;
+  }
+}
+@media (max-width: 650px) {
+  body {
+    overflow-x: hidden;
+  }
+  body .home .text {
+    width: 100%;
+    left: 0;
+    align-items: center;
+  }
+  body .home .text h1 {
+    text-align: center;
+    font-size: 8vw;
+    color: white;
+  }
+  body .barbers {
+    width: 100%;
+    min-height: -moz-max-content;
+    max-height: -moz-max-content;
+    max-height: max-content;
+  }
+  body .barbers .barbers_container .barber {
+    width: 80%;
+    height: -moz-max-content;
+    height: max-content;
+    justify-content: center;
+    gap: 15px;
+  }
+  body .barbers .barbers_container .barber .tworow {
+    flex-direction: column;
+  }
+  body .barbers .barbers_container .barber .tworow .image {
+    height: auto;
+  }
+  body .barbers .barbers_container .barber .tworow .image img {
+    width: 30vw;
+  }
+  body .barbers .barbers_container .barber .tworow .info {
+    height: -moz-max-content;
+    height: max-content;
+    gap: 20px;
+  }
+  body .barbers .barbers_container .barber .tworow .info .name {
+    width: 100%;
+    font-size: 6vw;
+  }
+  body .barbers .barbers_container .barber .tworow .info .about {
+    height: 70%;
+    gap: 0;
+  }
+  body .barbr {
+    text-align: center;
+  }
+  body section.about {
+    justify-content: center;
+    min-height: -moz-max-content;
+    height: -moz-max-content;
+    height: max-content;
+  }
+  body section.about .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  body section.about .left .image img {
+    width: 80vw;
+    height: auto;
+  }
+  body section.about .right {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  body section.about .right .text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  body section.about .right h1 {
+    font-size: 10vw;
+  }
+  body section.about .right p {
+    font-size: 5vw;
+  }
+  body .tutorial {
+    width: 100%;
+    height: 40%;
+    justify-content: center;
+    align-items: center;
+  }
+  body section.contact {
+    height: -moz-max-content;
+    height: max-content;
+    margin-top: 50px;
+  }
+  body section.contact h1 {
+    font-size: 10vw;
+  }
+}
+/*# sourceMappingURL=home.css.map */

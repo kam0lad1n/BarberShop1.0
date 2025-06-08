@@ -1,0 +1,22 @@
+.body {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+}
+
+.body .form {
+  width: 50%;
+}
+
+
+@media (max-width: 770px) {
+  .body .heading {
+    font-size: 5vw;
+  }
+}
+
+/*# sourceM

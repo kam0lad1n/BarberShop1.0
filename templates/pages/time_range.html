@@ -1,0 +1,45 @@
+{% extends 'pages/profile.html' %} 
+{% load static %} 
+{% block title %}Profile | Vaqtlar boshqaruvi{% endblock title %}
+{% block css %}
+{% static 'css/pages/time_date_list.css' %}
+{% endblock css %}
+{% block main %}
+<!-- schedule_form.html -->
+<div class="container">
+    <!-- <h2 class="heading" style="font-size: 3vw;">Vaqtlarni boshqarish</h2> -->
+
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div style="display: flex; gap: 30px; justify-content: center; flex-direction: column; margin: auto;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <h2 style="text-align: left;">Sanalarni tanlang</h2>
+                <div
+                    class="date-checkboxes"
+                    style="display: flex; flex-wrap: wrap; width: 80%; gap: 20px">
+                    {% for field in date_form %}
+    
+                    <label style="display: flex; gap: 5px; align-items: center;">
+                        {{ field }} {{ field.label }}
+                    </label>
+                    {{ field.errors }} {% endfor %}
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <h2 style="text-align: left;">Soatlarni tanlang</h2>
+                <div
+                    class="time-checkboxes"
+                    style="display: flex; flex-wrap: wrap; width: 80%; gap: 20px">
+                    {% for field in time_form %}
+                    <label style="display: flex">
+                        {{ field }} {{ field.label }}
+                    </label>
+                    {{ field.errors }} {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="btn  white" type="submit">Saqlash</button>
+    </form>
+</div>
+
+{% endblock main %}

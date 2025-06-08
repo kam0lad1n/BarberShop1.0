@@ -1,0 +1,63 @@
+{% extends 'pages/profile.html' %}
+{% block title %}Profile | Balance{% endblock title %} 
+{% block main %}
+<div class="container" style="padding: 50px">
+    <h2 class="heading">Hisobingiz</h2>
+    <h3 class="important-text"><strong>Balans:</strong> {{ balance }} so'm</h3>
+
+    <form method="post" class="form inset-shadow curve-border">
+        {% csrf_token %}
+        <div class="gr">
+            <label class="black" for="amount">Pul yechish</label>
+            <input
+                class="para black curve-border"
+                type="tel"
+                name="amount"
+                id="amount"
+                pattern="^[0-9]{1,3}(\.[0-9]{3})*$"
+                placeholder="yechilish summasi"
+                oninput="formatNumber(this)"
+                maxlength="10" />
+
+            {% if messages %} {% for message in messages %}
+            <p
+                style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+                {{ message }}
+            </p>
+            {% endfor %} {% endif %}
+        </div>
+        <button class="btn black curve-border " type="submit">
+            Yechish
+        </button>
+    </form>
+
+    <div class="form">
+        <div class="gr container">
+            <h3>Yechilgan pullar tarixi:</h3>
+            <ul>
+                {% for w in withdrawals %}
+                <li>{{ w.date|date:"Y-m-d H:i" }} - {{ w.amount }} so'm</li>
+                {% empty %}
+                <li>Hozircha hech qanday pul yechilmagan.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <a
+        class="btn white bad-bg curve-border"
+        href="{% url 'reset_balance' user.id %}"
+        >Balansni tozalash</a
+    >
+</div>
+
+<script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, "");
+        if (value.length > 3) {
+            value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        }
+        input.value = value;
+    }
+</script>
+
+{% endblock main %}

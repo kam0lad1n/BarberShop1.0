@@ -1,0 +1,51 @@
+{% extends 'pages/profile.html' %}
+{% block title %}Profile | Admin Code{% endblock title %}
+{% block main %}
+    <h2 class="heading">Adminlik Kodlar</h2>
+
+<form method="post" class="form inset-shadow curve-border">
+  {% csrf_token %}
+<div class="gr">
+      <input type="hidden" name="action" value="add">
+
+     <h2><label for="add_code">Yangi Admin KOD</label></h2>
+  <input type="text" class="para black curve-border" name="code" id="add_code" required>
+</div>
+
+  <button class="btn white " type="submit">+ Qo‘shish</button>
+</form>
+
+<hr>
+
+
+<ul class="errors">
+  {% for code in codes %}
+    <li class="form error good">
+      <form method="post" class="form" style="display:flex;;">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="edit">
+        <input type="hidden" name="code_id" value="{{ code.id }}">
+
+<div class="gr">
+            <h2><label for="kod">Kod:</label></h2>
+        <input class="para black curve-border" type="text" id="kod" name="code" value="{{ code.code }}" required>
+</div>
+
+        <button class="btn white  " type="submit">Saqlash</button>
+
+      </form>
+    </li>
+            <form method="post" class="form">
+            {% csrf_token %}
+               <input type="hidden" name="action" value="delete">
+        <input type="hidden" name="code_id" value="{{ code.id }}">
+        <button class="btn white bad-bg " type="submit" onclick="return confirm('Rostdan ham o‘chirishni xohlaysizmi?')">Olib tashlash</button>
+           </form>
+      
+      
+  {% empty %}
+    <h2 class="important-text">Hech qanday staff code yo‘q.</h2>
+  {% endfor %}
+</ul>
+
+{% endblock main %}

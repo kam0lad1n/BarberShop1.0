@@ -1,0 +1,127 @@
+{% extends "pages/profile.html" %}
+{% load static %}
+{% block title %}Profile | Barberlar{% endblock title %}
+{% block css %}{% static 'css/barbers/add_barber.css' %}{% endblock css %}
+
+{% block main %}
+    <div class="body">
+        <h2 class="heading">Barberlar</h2>
+        {% if barbers %}
+            <section class="cards">
+                {% for barber in barbers %}
+                    <div class="barberr">
+                        <div class="imagge">
+                            {% if barber.rasmi %}
+                                <img
+                                        loading="lazy"
+                                        src="{{ barber.rasmi.url }}"
+                                        alt="barber name"/>
+                            {% else %}
+                                <img
+                                        loading="lazy"
+                                        src="/static/images/profile.png"
+                                        alt="barber name"/>
+                            {% endif %}
+                        </div>
+                        <h1 class="blue">{{ barber.user.first_name }}</h1>
+                        <h1 class=" ">{% if barber.tajriba == None %}Tajriba mavjud emas!{% else %}{{ barber.tajriba }}
+                            yillik{% endif %}</h1>
+                        <h1 class=" ">{{ barber.yoshi }}</h1>
+
+                        {% if user.is_superuser or user.is_staff %}
+                            <a href="{% url 'delete_barber' barber.id %}" class="bad-bg black btn">O'chirish</a>
+                        {% else %}
+                            <a href="{% url 'create-chosen' barber.id %}" class=" black btn">Joy band qilish</a>
+                        {% endif %}
+                    </div>
+
+                {% endfor %}
+            </section>
+        {% else %}
+            <h1>
+                Bu yerda hali barberlar mavjud emas!
+            </h1>
+        {% endif %}
+        <h2 class="heading">Yangi barber qo‘shish</h2>
+        <form method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="gr" style="color: red;">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+            <div class="gr">
+                <label for="user_id">Foydalanuvchini tanlang:</label>
+                <select class="para black curve-border" name="user" id="user_id" required>
+                    <option value="" selected>User tanlang</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.get_full_name|default:user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="gr ">
+                <label for="about">Barber haqida:</label>
+                <input type="text" class="para black curve-border" name="haqida" id="about" placeholder="barber haqida">
+            </div>
+            <div class="gr ">
+                <label for="exp">Barberning tajriba yili:</label>
+                <input type="number" class="para black curve-border" name="tajriba" id="exp" placeholder="tajribasi"
+                       required>
+            </div>
+            <div class="gr ">
+                <label for="age">Barberning yoshi:</label>
+                <input type="number" class="para black curve-border" name="yoshi" id="age" placeholder="yoshi" required>
+            </div>
+            <div class="gr">
+                <form method="post" enctype="multipart/form-data" class="form" id="imageForm">
+                    {% csrf_token %}
+                    <input type="file" class="para " name="rasmi" id="imageInput" accept="image/*"
+                           onchange="previewImage(this)" hidden>
+                    <label for="imageInput" id="imageLabel" style="cursor: pointer;">
+                        <img id="preview" src="" alt="Rasm yo‘q"
+                             style="display: none; width: 200px; height: auto; border-radius: 10px;">
+                        <div class="btn curve-border " id="uploadText">Rasm joylash uchun bosing</div>
+                    </label>
+                    <button type="button" id="cancelButton" onclick="cancelImage()"
+                            style="display: none; margin-top: 10px;">Bekor qilish
+                    </button>
+                    <button class="btn curve-border black  " type="submit">Qo‘shish</button>
+                </form>
+            </div>
+        </form>
+
+
+    </div>
+    <script>
+        function previewImage(input) {
+            const file = input.files[0];
+            const preview = document.getElementById('preview');
+            const uploadText = document.getElementById('uploadText');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadText.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function cancelImage() {
+            const imageInput = document.getElementById('imageInput');
+            const preview = document.getElementById('preview');
+            const uploadText = document.getElementById('uploadText');
+            const cancelButton = document.getElementById('cancelButton');
+
+            imageInput.value = '';
+            preview.src = '';
+            preview.style.display = 'none';
+            uploadText.style.display = 'block';
+            cancelButton.style.display = 'none';
+        }
+    </script>
+
+{% endblock main %}
+

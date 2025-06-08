@@ -1,0 +1,121 @@
+{% extends 'pages/profile.html' %}
+{% load static %}
+{% block title %}Profile | Foydalanuvchilar{% endblock title %}
+{% block css %}{% static '/css/barbers/users.css' %}{% endblock css %}
+
+
+{% block main %}
+    <div class="body">
+        <h2 class="black heading important-text">
+            Sayt foydalanuvchilari
+        </h2>
+        <div class="table-parent">
+            <table class="table black">
+                <tr>
+                    <th>№</th>
+                    <th>F.I.SH</th>
+                    <th>Telefon</th>
+                    <th>Qachon qo'shilgan?</th>
+                    <th>User ID</th>
+                    <th>Adminmi?</th>
+                    <th>Harakatlar</th>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ user.get_full_name }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        <td>{{ user.id }}</td>
+                        <td>
+                            {% if user.is_staff %}
+                                <span class="good">Admin</span>
+                            {% else %}
+                                <span>Oddiy foydalanuvchi</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button onclick="toggleActions('{{ user.id }}')" class="btn curve-border light-">
+                                Tahrirlash
+                            </button>
+                        </td>
+
+                    </tr>
+                     <div id="actions-{{ user.id }}" class="act" style="display:none;">
+                        <h1>Harakatni tanlang</h1>
+                        <div class="form">
+                            {% if user.is_staff %}
+                                <form
+                                        method="post"
+                                        action="{% url 'remove_admin' user.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn curve-border bad-bg black">
+                                        Adminlikdan olish
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form
+
+                                        method="post"
+                                        action="{% url 'make_admin' user.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn curve-border  black ">
+                                        Admin qilish
+                                    </button>
+                                </form>
+                            {% endif %}
+
+                            <form
+
+                                    method="post"
+                                    action="{% url 'remove_user' user.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class=" btn curve-border bad-bg black">
+                                    O'chirish
+                                </button>
+                            </form>
+                            <form
+
+                                    method="post"
+                                    action="{% url 'users_list' %}">
+                                {% csrf_token %}
+                                <button type="submit" class=" btn curve-border light- black ">
+                                    Tugatish
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="bad-alert">
+                            Hali foydalanuvchilar mavjud emas!
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+        </div>
+        <div class="error-message">
+            {% if messages %}
+                {% for message in messages %}
+                    <div>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <script>
+  function toggleActions(userId) {
+    const actionsDiv = document.getElementById('actions-' + userId);
+    if (actionsDiv.style.display === 'none') {
+      actionsDiv.style.display = 'block';
+    } else {
+      actionsDiv.style.display = 'none';
+    }
+  } 
+    </script>
+{% endblock main %}
+

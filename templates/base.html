@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}Barber Shop{% endblock %}</title>
+    <link rel="stylesheet" href="{% block css %}{% endblock css %}">
+    <link rel="stylesheet" href="/static/css/base/base.css"/>
+    <link rel="stylesheet" href="/static/css/total/total.css">
+    <link rel="icon" href="/static/images/logo.jpeg">
+</head>
+<body>
+<nav>
+    <div class="left">
+        <a href="/" class="white btn">
+            ixtiyor
+        </a>
+        <!-- {% if site.site_name %}
+        <a href="/" class="white btn">
+            {{ site.site_name }}
+        </a>
+        {% else %}
+        <a href="/" class="white btn">
+            {{ site.site_name }}
+        </a>
+        {% endif %} -->
+    </div>
+    {% if user.is_staff or user.is_superuser %}
+    <h4 class="shot white">Hisob: {{ user.account_balance }}</h4>
+    {% endif %}
+    <div class="right">
+        <div id="options" class="fastlinks">
+            {% if not user.is_authenticated %}
+            <div class="log_sign">
+                <a href="{% url 'register' %}" class="btn curve-border signin white ">Ro'yxatdan o'tish</a>
+                <a href="{% url 'login' %}" class="btn curve-border login inset-shadow">Kirish</a>
+            </div>
+            {% else %}
+            <div class="actions gr">
+                <div class="top">
+                    {% if user.profile_image %}
+                    <div class="profile_image">
+                        <img src="{{ user.profile_image.url }}" alt=""/>
+                    </div>
+                    {% else %}
+                    <div class="profile_image">
+                        <img src="{% static 'images/profile.png' %}" alt=""/>
+                    </div>
+                    {% endif %}
+                    <div class="info">
+                        <h2 class="important-text blue name">{{ user.first_name|title }}</h2>
+                        <h2 class="important-text blue name">{{ user.last_name|title }}</h2>
+                        <h4 class="important-text blue name">{{ user.phone }}</h4>
+                        <h4 class="exp white">{{ user.telefon }}</h4>
+                    </div>
+                </div>
+                <div class="bottom">
+                    {% if user.is_superuser %}
+                    <a href="{% url 'profile_edit' %}" class="btn_profile  white">Profilni tahrirlash</a>
+                    <a href="{% url 'add_barber' %}" class="btn_profile  white">Barberlar</a>
+                    <a href="{% url 'clients' %}" class="btn_profile  white">Mijozlarlarim</a>
+                    <a href="{% url 'change_password' %}" class="btn_profile  white">Parolni o'zgartirish</a>
+                    <a href="{% url 'reset_password' %}" class="btn_profile  white">Parolni tiklash</a>
+                    <button onclick="showButtons()" class="btn_profile toggle_btn dropdown white">Boshqa sozlamalar</button>
+                    <div id="hiddenButtons" style="display:none;">
+                        <a href="{% url 'users_list' %}" class="btn_profile  white">Foydalanuvchilar</a>
+                        <a href="{% url 'manage_schedule' %}" class="btn_profile  white">Vaqtlar</a>
+                        <a href="{% url 'level_list' %}" class="btn_profile  white">Tariflar</a>
+                        <a href="{% url 'balance' %}" class="btn_profile  white">Balance</a>
+                        <a href="{% url 'admin' %}" class="btn_profile  white">Admin panelga..</a>
+                        <a href="{% url 'staffcode-page' %}" class="btn_profile  white">Admin Code</a>
+                        <a href="{% url 'site_update' %}" class="btn_profile  white">saytni tahrirlash</a>
+
+                    </div>
+                    <form class="logout" method="post" action="{% url 'logout' %}">{% csrf_token %}
+                        <button type="submit" class="btn_profile bad">Akkountdan chiqish</button>
+                    </form>
+
+                {% elif user.is_staff %}
+                    <p class="btn_profile"></p>
+                    <a href="{% url 'profile_edit' %}" class="btn_profile  white">Profilni tahrirlash</a>
+                    <a href="{% url 'clients' %}" class="btn_profile  white">Mijozlarlarim</a>
+                    <button onclick="showButtons()" class="btn_profile toggle_btn dropdown white">Boshqa sozlamalar</button>
+                    <div id="hiddenButtons" style="display: none;">
+                        <a href="{% url 'manage_schedule' %}" class="btn_profile  white">Vaqtlar</a>
+                        <a href="{% url 'level_list' %}" class="btn_profile  white">Tariflar</a>
+                        <a href="{% url 'balance' %}" class="btn_profile  white">Balance</a>
+
+                        <a href="{% url 'change_password' %}" class="btn_profile  white">Parolni o'zgartirish</a>
+                        <a href="{% url 'reset_password' %}" class="btn_profile  white">Parolni tiklash</a>
+                    </div>
+                    <form class="logout" method="post" action="{% url 'logout' %}">{% csrf_token %}
+                        <button type="submit" class="btn_profile bad">Akkountdan chiqish</button>
+                    </form>
+                {% else %}
+                    <p class="btn_profile"></p>
+                    <a href="{% url 'profile_edit' %}" class="btn_profile  white">Profilni tahrirlash</a>
+                    <a href="{% url 'clients' %}" class="btn_profile  white">Mening navbatlarim</a>
+                    <a href="{% url 'change_password' %}" class="btn_profile  white">Parolni o'zgartirish</a>
+                    <a href="{% url 'reset_password' %}" class="btn_profile  white">Parolni tiklash</a>
+                    <form class="logout" method="post" action="{% url 'logout' %}">{% csrf_token %}
+                        <button type="submit" class="btn_profile bad">Akkountdan chiqish</button>
+                    </form>
+                {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="additional">
+            {% if not user.is_authenticated %}
+                <div class="log_sign">
+                    <a href="{% url 'register' %}" class="btn curve-border signin white ">Ro'yxatdan o'tish</a>
+                    <a href="{% url 'login' %}" class="btn curve-border login inset-shadow">Kirish</a>
+                </div>
+            {% else %}
+                <div class="dropdown  ">
+                    <a class="account curve-border" href="/profile/edit/">{{ user.first_name|slice:':1'|upper }}{{ user.last_name|slice:':1'|upper }}</a>
+                    <form class="logout" action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button class="exit" type="submit">Chiqish</button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <i onclick="nav_open()" class="fa-solid fa-bars-staggered burger"></i>
+</nav>
+<main>
+    {% block content %}
+    {% endblock content %}
+</main>
+</body>
+<script src="/static/js/base.js"></script>
+<script>
+    function showButtons() {
+        const buttons = document.querySelector('#hiddenButtons'),
+        toggle_btn = document.querySelector(".toggle_btn")
+        buttons.style.display = buttons.style.display === 'block' ? 'none' : 'block';
+        toggle_btn.classList.toggle("opened")
+    }
+</script>
+<script src="{% block extrajs %}{% endblock extrajs %}"></script>
+<script src="https://kit.fontawesome.com/4e53563d8d.js" crossorigin="anonymous"></script>
+</html>

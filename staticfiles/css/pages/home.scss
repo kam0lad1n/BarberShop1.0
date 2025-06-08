@@ -1,0 +1,613 @@
+body {
+    .tutorial {
+        position: fixed;
+        z-index: 9999999;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: #00000090;
+
+        &.active {
+            display: flex;
+        }
+
+        .close {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--third-color);
+        }
+
+        iframe {
+            width: 60%;
+            height: 80%;
+        }
+    }
+    section {
+        width: 100%;
+        height: min(100lvh);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 30px 0;
+        gap: 20px;
+
+        &.home {
+            position: relative;
+            background-size: cover;
+            background-image: url("/static/images/home_bg.jpeg");
+
+            .bg-shade {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000000df;
+                z-index: 1;
+            }
+
+            .text {
+                position: absolute;
+                width: 40lvw;
+                height: 30lvh;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                left: 100px;
+                z-index: 3;
+
+                h1 {
+                    font-size: 3.5rem;
+                    text-transform: uppercase;
+                }
+
+                .btn {
+                    width: -moz-max-content;
+                    width: max-content;
+                    padding: 10px 15px;
+                    font-size: 1rem;
+                }
+            }
+
+            .shaving_machine {
+                position: absolute;
+                z-index: 2;
+                right: 60px;
+                transform: rotate(-25deg);
+            }
+
+            .down {
+                position: absolute;
+                font-size: 2rem;
+                left: 100px;
+                bottom: 50px;
+                animation: up-down 2s infinite linear;
+                z-index: 3;
+                color: var(--third-color);
+            }
+        }
+
+        &.barbers {
+            position: relative;
+            z-index: 2;
+            .bg-shade {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+            }
+            .heading {
+                z-index: 2;
+            }
+            .barbers_container {
+                width: 100%;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+                z-index: 2;
+
+                .barber {
+                    width: 500px;
+                    height: max-content;
+                    border: 1px solid var(--second-bg);
+                    border-radius: 10px;
+                    padding: 10px;
+
+                    .tworow {
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+
+                    .image {
+                        height: auto;
+
+                        img {
+                            height: auto;
+                        }
+                    }
+
+                    .info {
+                        width: 50%;
+                        height: 100%;
+                        padding: 15px;
+                        justify-content: space-evenly;
+                        align-items: start;
+                        flex-direction: column;
+
+                        .about {
+                            height: -moz-max-content;
+                            height: max-content;
+                            flex-direction: column;
+                            align-items: start;
+                            justify-content: start;
+                            gap: 0;
+                        }
+
+                        .name {
+                            font-size: 2rem;
+                        }
+
+                        .description {
+                            color: var(--fourth-color);
+                            width: 300px;
+                        }
+
+                        .details {
+                            display: flex;
+                            flex-direction: column;
+
+                            .gr {
+                                width: -moz-max-content;
+                                width: max-content;
+                                gap: 5px;
+                            }
+                        }
+                    }
+
+                    .btn {
+                        width: auto;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+
+        &.nobarber {
+            background-color: var(--disable);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            h1 {
+                color: var(--danger);
+            }
+        }
+
+        &.about {
+            .about_container {
+                height: 70%;
+                width: max-content;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+                gap: 20px;
+
+                .left {
+                    height: 100%;
+                    gap: 30px;
+                    .image {
+                        width: -moz-max-content;
+                        width: max-content;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img {
+                            height: 80%;
+                        }
+                    }
+                }
+
+                .right {
+                    width: 40vw;
+                    display: flex;
+                    justify-content: center;
+                    align-items: start;
+                    flex-direction: column;
+                    gap: 10px;
+
+                    .para {
+                        width: 100%;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+
+        &.contact {
+            width: 100%;
+            height: 100lvh;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: column;
+
+            .info {
+                width: 80%;
+                display: flex;
+                justify-content: space-evenly;
+
+                .left {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    gap: 20px;
+
+                    .gr {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 5px;
+                    }
+                }
+
+                .right {
+                    width: 50%;
+                    height: 50lvh;
+
+                    .map {
+                        width: 100%;
+                        height: 100%;
+
+                        iframe {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .heading {
+        text-align: center;
+    }
+}
+
+@media (min-width: 1430px) {
+    body {
+        .home {
+            background-repeat: no-repeat;
+
+            .text h1 {
+                color: white;
+            }
+        }
+
+        .heading {
+            font-size: 3vw;
+        }
+
+        .barbers {
+            .barber {
+                width: 40%;
+            }
+        }
+
+        .btn {
+            font-size: 1vw;
+        }
+
+        section.about {
+            .para {
+                font-size: 1.5vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 1025px) {
+    body {
+        .barbers {
+            height: 150lvh;
+        }
+    }
+}
+
+@media (max-width: 1378px) {
+    body {
+        .home {
+            .text {
+                width: 500px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    body {
+        section {
+            &.home {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .text {
+                    width: 100%;
+                    left: 0;
+                    align-items: center;
+                }
+
+                .down {
+                    width: 100%;
+                    left: 0;
+                    display: inline;
+                    text-align: center;;
+                }
+
+                .shaving_machine{
+                    display: none;
+                }
+            }
+
+            &.barbers {
+                .barber {
+                    width: 90% !important;
+                    height: max-content;
+                }
+            }
+
+            &.contact {
+                height: 150lvh;
+
+                .info {
+                    flex-direction: column-reverse;
+                    gap: 50px;
+                    align-items: center;
+
+                    .left {
+                        align-items: center;
+
+                        .gr {
+                            align-items: center;
+                        }
+
+                        .btn {
+                            width: 150px;
+                        }
+                    }
+
+                    .right {
+                        width: 100%;
+
+                        .map {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            &.about {
+                .about_container {
+                    min-height: -moz-max-content;
+                    min-height: max-content;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    .right {
+                        width: 90vw;
+                        text-align: center;
+                        align-items: center;
+
+                        p {
+                            font-size: 3vw;
+                            text-align: center !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 845px) {
+    body {
+        section {
+            &.barbers {
+                .barber {
+                    width: 90% !important;
+                    height: max-content;
+
+                    .info {
+                        width: 100%;
+
+                        .about {
+                            width: 100%;
+
+                            h1 {
+                                font-size: 6vw;
+                            }
+
+                            p {
+                                width: 100%;
+                                font-size: 4vw;
+                            }
+                        }
+
+                        .details .gr h1 {
+                            font-size: 4vw;
+                        }
+
+                        .btn {
+                            font-size: 3vw;
+                        }
+                    }
+                }
+            }
+
+            &.about {
+                justify-content: center;
+                min-height: -moz-max-content;
+                min-height: max-content;
+
+                .left {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .image {
+                        height: 85%;
+                    }
+                }
+
+                .right {
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    .text {
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                    }
+
+                    h1 {
+                        font-size: 6vw;
+                    }
+
+                    p {
+                        font-size: 3vw;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        overflow-x: hidden;
+
+        .home {
+            .text {
+                width: 100%;
+                left: 0;
+                align-items: center;
+
+                h1 {
+                    text-align: center;
+                    font-size: 8vw;
+                    color: white;
+                }
+            }
+        }
+
+        .barbers {
+            width: 100%;
+            min-height: -moz-max-content;
+            max-height: max-content;
+
+            .barbers_container{
+                .barber {
+                    width: 80%;
+                    height: max-content;
+                    justify-content: center;
+                    gap: 15px;
+    
+                    .tworow{
+                        flex-direction: column;
+                        .image {
+                            height: auto;
+            
+                            img {
+                                width: 30vw;
+                            }
+                        }
+            
+                        .info {
+                            height: max-content;
+                            gap: 20px;
+            
+                            .name {
+                                width: 100%;
+                                font-size: 6vw;
+                            }
+            
+                            .about {
+                                height: 70%;
+                                gap: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .barbr {
+            text-align: center;
+        }
+
+        section.about {
+            justify-content: center;
+            min-height: -moz-max-content;
+            height: max-content;
+
+            .left {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .image img {
+                    width: 80vw;
+                    height: auto;
+                }
+            }
+
+            .right {
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+
+                .text {
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                h1 {
+                    font-size: 10vw;
+                }
+
+                p {
+                    font-size: 5vw;
+                }
+            }
+        }
+
+        .tutorial {
+            width: 100%;
+            height: 40%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        section.contact {
+            height: max-content;
+            margin-top: 50px;
+
+            h1 {
+                font-size: 10vw;
+            }
+        }
+    }
+}
+/*# sourceMappingURL=style.css.map */

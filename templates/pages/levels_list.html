@@ -1,0 +1,59 @@
+{% extends 'pages/profile.html' %}
+{% load static %}
+{% block title %}Profile | Tariflar{% endblock title %}
+{% block css %}{% static 'css/pages/level_list.css' %}{%  endblock css %}
+{% block main %}
+
+<div class="body">
+<h2 class="heading">Yangi tarif qo‘shish</h2>
+<form method="post" class="form">
+    {% csrf_token %}
+    <div class="gr">
+        <label class="black" for="name">Nomi:</label>
+        <input class="para black curve-border" type="text" name="name" id="name" placeholder="nomi"  maxlength="20">
+    </div>
+
+      <div class="gr">
+        <label for="value">Pul miqdori:</label>
+        <input class="para black curve-border" type="text" name="value" id="value" pattern="^[0-9]{1,3}(\.[0-9]{3})*$"  placeholder="miqdori" oninput="formatNumber(this)" maxlength="15" >
+    </div>
+    <button class="btn curve-border black  " type="submit">Qo‘shish</button>
+</form>
+
+{% if levels %}
+<div class="level_list">
+    <h1>Tariflar ro‘yxati</h1>
+<ul>
+    {% for level in levels %}
+        <li>
+            <h3>{{ level.name }} – {{ level.value }} so‘m</h3>
+            <form method="post" action="{% url 'delete_level' level.pk %}" style="display:inline;">
+                {% csrf_token %}
+                {% if request.user.is_superuser and level.barber.user.id != request.user.id %}
+                    <h3>{{ level.barber }}</h3>
+                {% else %}
+                <button class="btn bad-bg" type="submit" onclick="return confirm('Rostdan ham o‘chirmoqchimisiz?')">O‘chirish</button>
+                {% endif %}
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+</div>
+{% else %}
+<div class="level_list">
+<h1>
+    Hozircha tariflar yo'q
+</h1>
+</div>
+{% endif %}
+</div>
+<script>
+  function formatNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 3) {
+      value = value.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }
+    input.value = value;
+  }
+</script>
+{% endblock main %}

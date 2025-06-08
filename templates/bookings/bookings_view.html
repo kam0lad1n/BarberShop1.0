@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mijozlar{% endblock title %}
+{% block css %}{% static 'css/bookings/clients.css' %}{% endblock css %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="body" style="display: flex; flex-direction: column; gap: 30px;">
+        {% if clients_only %}
+            <table class="table black">
+                <tr>
+                    <th>#</th>
+                    <th>Ism</th>
+                    <th>Telefon</th>
+                    <th>ID</th>
+                    <th>Tarif</th>
+                    <th>Sana va Vaqt</th>
+                    {% if request.user.is_superuser or request.user.is_staff %}
+                        <th>Tugatish</th>
+                        <th>O'chirish</th>
+                    {% else %}
+                        <th>Bekor qilish</th>
+                    {% endif %}
+                </tr>
+
+                <h2 class="heading">Mijozlar ro‘yxati:</h2>
+
+                {% for post in clients_only %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        {% if post.familiya == None %}
+                            <td>{{ post.ism }}</td>
+                        {% else %}
+                            <td>{{ post.ism }} {{ post.familiya }}</td>
+                        {% endif %}
+                        <td>{{ post.telefon }}</td>
+                        <td>{{ post.id }}</td>
+                        <td>{% if post.level %}{{ post.level.name }}{% else %}Tanlanmagan!{% endif %}</td>
+                        <td>{{ post.sana.date }}, {{ post.vaqt.time }}</td>
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            {% if request.user == post.owner %}
+                                <td>
+                                    <form method="post" action="{% url 'complete_client' post.id %}">
+                                        {% csrf_token %}
+                                        <button onclick="return confirm('Mijozni tugatdingizmi?')" type="submit"
+                                                class="btn  white">Tugatish
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a class="btn bad-bg istisno" href="{% url 'delete' post.pk %}">O'chirish</a>
+                                </td>
+                            {% else %}
+                                <td>Ruxsat yo'q</td>
+                                <td>Ruxsat yo'q</td>
+                            {% endif %}
+                        {% else %}
+                            <td>
+                                <a class="btn bad-bg istisno" href="{% url 'delete' post.pk %}">Bekor qilish</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+            </table>
+
+        {% else %}
+
+            <div class="container">
+                {% if request.user.is_superuser or request.user.is_staff %}
+                    <h2 class="heading">Hozircha mijozlar mavjud emas!</h2>
+                {% else %}
+                    <h2 class="heading">Hozircha bandlik mavjud emas!</h2>
+                {% endif %}
+
+            </div>
+        {% endif %}
+    </div>
+
+
+    <script>
+        function showAlert(clientId) {
+            document.getElementById('alert-popup').style.display = 'block';
+            document.getElementById('complete-btn').setAttribute('data-client-id', clientId);
+        }
+
+        function closeAlert() {
+            document.getElementById('alert-popup').style.display = 'none';
+        }
+
+    </script>
+{% endblock %}

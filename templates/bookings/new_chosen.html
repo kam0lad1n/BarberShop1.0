@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Joy band qilish {% endblock title %}
+{% block css %}{% static 'css/bookings/new_chosen.css' %}{% endblock css %}
+{% block content %}
+
+<div class="body1">
+    <h2>Salondan joy band qilish</h2>
+    <h6>
+        Agar tushunmayotgan bo‘lsangiz, <a href="">yo‘riqnoma</a> bilan
+        tanishing!
+    </h6>
+    <form method="post" id="booking_form">
+        {% csrf_token %}
+        <div>
+            <label for="name">Ism</label>
+            <input
+                name="ism"
+                type="text"
+                id="name"
+                placeholder="ism"
+                required />
+        </div>
+        <div>
+            <label for="familiya">Familiya</label>
+            <input
+                name="familiya"
+                type="text"
+                id="familiya"
+                placeholder="familiya" />
+        </div>
+        <div>
+            <label for="telefon">Telefon</label>
+            <input
+                name="telefon"
+                type="tel"
+                id="telefon"
+                placeholder="telefon raqami"
+                pattern="\+998\s[0-9]{2}\s[0-9]{3}\s[0-9]{2}-[0-9]{2}"
+                required />
+        </div>
+        <div>
+            <label for="id_sana">Sana</label>
+            <select name="sana" id="id_sana" class="form-select" required>
+                {% for value, label in form.fields.sana.widget.choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+            {{ form.sana.errors }}
+        </div>
+
+        <div>
+            <label for="id_time">Vaqt</label>
+            <select name="vaqt" id="id_time" class="form-select" required>
+                {% for value, label in form.fields.vaqt.widget.choices %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+            {{ form.vaqt.errors }}
+        </div>
+        {% if form.non_field_errors %}
+        <div style="width: 300px; height: 30px">
+            {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <fieldset>
+            <legend>Level:</legend>
+            <label for="level_silver">
+                <input type="radio" id="level_silver" name="level"
+                value="silver" {% if form.level.value == 'silver' %} checked {%
+                endif %}> Silver
+            </label>
+            <label for="level_gold">
+                <input type="radio" id="level_gold" name="level" value="gold" {%
+                if form.level.value == 'gold' %} checked {% endif %}> Gold
+            </label>
+            <label for="level_platinum">
+                <input type="radio" id="level_platinum" name="level"
+                value="platinum" {% if form.level.value == 'platinum' %} checked
+                {% endif %}> Platinum
+            </label>
+        </fieldset>
+        <button class="submit_btn" type="submit">Saqlash</button>
+    </form>
+</div>
+
+<div id="confirmModal" class="modal">
+    <div class="modal-content" style="width: 600px">
+        <h5>Tasdiqlash</h5>
+        <p>Haqiqatdan ham ushbu joyni band qilmoqchimisiz?</p>
+        <div>
+            <button id="confirmSubmit">Tasdiqlash</button>
+            <button id="editConfirm">O'zgartirish</button>
+            <form class="form" action="/">
+                <button>Bekor qilish</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/new.js' %}"></script>
+{% endblock content %}
